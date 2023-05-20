@@ -32,8 +32,8 @@ namespace DownNotifier.Controllers
         }
 
         public IActionResult SaveUrlDefinition(UrlDefinitionDto definitionDto)
-        {
-            if(Uri.IsWellFormedUriString(definitionDto.Url, UriKind.RelativeOrAbsolute))
+        {  
+            if (!Uri.IsWellFormedUriString(definitionDto.Url, UriKind.Absolute))
                 return Json(
                     new SaveUrlDefinitionResult()
                     {

@@ -1,0 +1,38 @@
+﻿@model List<DownNotifier.Business.UrlDefinition.Dto.UrlDefinitionDto>
+@{
+    Layout = null;
+}
+<table id="UrlListTable" data-toggle="table" data-pagination="true" data-search="true">
+    <thead>
+        <tr>
+            <th data-align="center" data-sortable="true">Url Adı</th>
+            <th data-align="center" data-sortable="true">Link</th>
+            <th data-align="center" data-sortable="true">Tekrarlama Zamanı(DK)</th>
+            <th data-sortable="true">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody> 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.Raw(item.UrlName)</td>
+                <td>@item.Url</td> 
+                <td>@item.TimeInterval</td> 
+                <td>
+                    <button onclick="UrlActionForm('@item.ResourceId')" type="button" class="btn btn-xs green">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button onclick="DeleteUrlDefinition('@item.ResourceId')" type="button" class="btn btn-xs red">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr> 
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#UrlListTable').bootstrapTable();
+    });
+</script>

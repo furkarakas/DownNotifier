@@ -4,6 +4,7 @@ using DownNotifier.Business.UrlDefinition;
 using DownNotifier.Business.UrlDefinition.Result;
 using DownNotifier.Models.UrlDefinition;
 using Hangfire;
+using Hangfire.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ namespace DownNotifier.Controllers
         }
 
         public IActionResult Index()
-        { 
+        {
             return View();
         }
 

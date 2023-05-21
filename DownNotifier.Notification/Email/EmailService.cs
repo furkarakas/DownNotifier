@@ -1,5 +1,7 @@
 ﻿using DownNotifier.Notification.Email.Model;
-using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MimeKit;
+using System.Net; 
 
 namespace DownNotifier.Notification.Email
 {
@@ -8,18 +10,27 @@ namespace DownNotifier.Notification.Email
         public bool SendEmail(SendEmailModel sendEmailModel)
         {
             try
-            {
-                MailMessage email = new MailMessage();
-                email.From = new MailAddress("email");
-                email.To.Add(sendEmailModel.To.FirstOrDefault());
+            { 
+                var email = new MimeMessage();
+
+                email.From.Add(new MailboxAddress("demodownnotifier@gmail.com", "demodownnotifier@gmail.com"));
+                email.To.Add(new MailboxAddress(sendEmailModel.To.FirstOrDefault(), sendEmailModel.To.FirstOrDefault()));
+
                 email.Subject = sendEmailModel.Subject;
-                email.Body = sendEmailModel.Content;
-                SmtpClient smtp = new SmtpClient();
-                smtp.Credentials = new System.Net.NetworkCredential("email", "password");
-                smtp.Port = 587;
-                smtp.Host = "smtp.gmail.com";
-                smtp.EnableSsl = true;
-                smtp.SendAsync(email, (object)email);
+                email.Body = new TextPart(MimeKit.Text.TextFormat.Text)
+                {
+                    Text = sendEmailModel.Content
+                };
+
+                using (var smtp = new SmtpClient())
+                {
+                    smtp.Connect("smtp.gmail.com", 587, false);
+
+                    smtp.Authenticate("demodownnotifier@gmail.com", "zpypnjrhdjpcmdiv");
+
+                    smtp.Send(email);
+                    smtp.Disconnect(true);
+                }
 
                 return true;
             }

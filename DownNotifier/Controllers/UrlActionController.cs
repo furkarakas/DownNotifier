@@ -65,7 +65,7 @@ namespace DownNotifier.Controllers
             {  
                 var user = _userManager.GetUserAsync(User).GetAwaiter().GetResult();
 
-                RecurringJob.AddOrUpdate<CheckUrlJobManager>(result.ResourceId.ToString(), x => x.CheckUrl(definitionDto.Url, user.UserName), $"*/{serviceRequest.TimeInterval} * * * * *");
+                RecurringJob.AddOrUpdate<CheckUrlJobManager>(result.ResourceId.ToString(), x => x.CheckUrl(definitionDto.Url, user.UserName), $"*/{serviceRequest.TimeInterval} * * * *");
             }
 
             return Json(result);
